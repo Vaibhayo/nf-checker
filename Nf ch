@@ -1,0 +1,26 @@
+using Netflix.Models;
+using Netflix.Controllers;
+
+void SomeMethod()
+{
+    WebProxy proxy = null;
+    Account account = new Account("email", "password");
+    AccountController controller = new AccountController(proxy);
+    controller.Initialize();
+
+    try
+    {
+        controller.PostLogin(account, proxy);
+    catch(LoginException lex)
+    {
+        Console.WriteLine($"Failed to login: {lex.Message}.")
+    }
+    catch(BadCredentialsException bcex)
+    {
+        Console.WriteLine("Invalid account credentials entered.");
+    }
+    catch(NoPlanException npex)
+    {
+        Console.WriteLine("Account has no active subscriptions.");
+    }
+}
